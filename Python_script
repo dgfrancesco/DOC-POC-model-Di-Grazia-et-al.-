@@ -1,6 +1,6 @@
 """
 Model exported as python.
-Name : POC & DOC model (Di Grazia et al.)
+Name : DOC & POC model (Di Grazia et al.)
 Group : Organic carbon
 With QGIS : 32206
 """
@@ -19,12 +19,12 @@ class PocDoc(QgsProcessingAlgorithm):
 
     def initAlgorithm(self, config=None):
         # LULC layer with POC and DOC loads concentrations
-        self.addParameter(QgsProcessingParameterVectorLayer('LULC', 'LULC layer with "OC" field with OC loads (mg/l)', types=[QgsProcessing.TypeVectorPolygon], defaultValue=None))
+        self.addParameter(QgsProcessingParameterVectorLayer('LULC', 'LULC layer with "OC" field with DOC or POC loads (mg/l)', types=[QgsProcessing.TypeVectorPolygon], defaultValue=None))
         self.addParameter(QgsProcessingParameterVectorLayer('Subbasins', 'Subbasins with field "DN" (''1'',''2'',''3'',''n'')', defaultValue=None))
         self.addParameter(QgsProcessingParameterVectorLayer('Mainchannel', 'Main channel', types=[QgsProcessing.TypeVectorLine], defaultValue=None))
         self.addParameter(QgsProcessingParameterVectorLayer('Tributaries', 'Tributaries', defaultValue=None))
-        self.addParameter(QgsProcessingParameterRasterLayer('Wateryield', 'Water yield (mm)', defaultValue=None))
-        self.addParameter(QgsProcessingParameterNumber('Wateryieldpixelsize', 'Water yield pixel size (m)', type=QgsProcessingParameterNumber.Double, defaultValue=None))
+        self.addParameter(QgsProcessingParameterRasterLayer('Wateryield', 'Water runoff proxy (mm) (e.g. quick flow or water yield)', defaultValue=None))
+        self.addParameter(QgsProcessingParameterNumber('Wateryieldpixelsize', 'Water runoff proxy pixel size (m)', type=QgsProcessingParameterNumber.Double, defaultValue=None))
         self.addParameter(QgsProcessingParameterNumber('Tributariesreductionfactor', 'Tributaries OC reduction factor', type=QgsProcessingParameterNumber.Double, minValue=0, defaultValue=0.5))
         self.addParameter(QgsProcessingParameterNumber('mainchannelreductionfactor', 'Main channel OC reduction factor', type=QgsProcessingParameterNumber.Double, minValue=0, maxValue=1, defaultValue=0.5))
 
@@ -348,10 +348,10 @@ class PocDoc(QgsProcessingAlgorithm):
         return results
 
     def name(self):
-        return 'POC & DOC'
+        return 'DOC & POC'
 
     def displayName(self):
-        return 'POC & DOC model (Di Grazia et al.)'
+        return 'DOC & POC model (Di Grazia et al.)'
 
     def group(self):
         return 'Carbon'
